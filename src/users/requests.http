@@ -1,0 +1,75 @@
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+  "email": "test2@gmail.com",
+  "password": "tesT1234_",
+  "contract_start_date": "2025-06-29"
+}
+
+### Signin
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "tesT1234_"
+}
+
+### Signin
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+  "email": "test4@gmai.com",
+  "password": "tesT12345_"
+}
+
+### Signout
+POST http://localhost:3000/auth/signout
+
+### Get the currently signed in user
+GET http://localhost:3000/users/me
+
+### Update user's email
+PATCH http://localhost:3000/users/me/email
+content-type: application/json
+
+{
+  "email": "test5@gmail.com"
+}
+
+### Update user's password
+PATCH http://localhost:3000/users/me/password
+content-type: application/json
+
+{
+  "current_password": "tesT1234_",
+  "password": "tesT12345_",
+  "password_confirmation": "tesT12345_"
+}
+
+### Find all users with a given email
+GET http://localhost:3000/users/
+?limit=10
+&page=2
+
+### aa
+POST http://localhost:3000/users
+content-type: application/json
+
+{
+  "firstName": "naoki",
+  "lastName": "honda",
+  "email": "john@doe.com",
+  "password": "password123#"
+}
+
+### patch user
+PATCH http://localhost:3000/users
+content-type: application/json
+
+{
+  "email": "john@doe.com",
+  "password": "password123#"
+}

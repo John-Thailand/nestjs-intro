@@ -22,8 +22,8 @@ export class PostsController {
     description: 'You get a 201 response if your post is created successfully',
   })
   @Post()
-  public createPosts(@Body() createPostDto: CreatePostDto) {
-    console.log(createPostDto);
+  public createPost(@Body() createPostDto: CreatePostDto) {
+    return this.postsService.create(createPostDto);
   }
 
   @ApiOperation({

@@ -75,6 +75,7 @@ export class Post {
   // Postエンティティにremoveなどの操作を行うと、MetaOptionエンティティにも自動的に同じ操作が行われる
   @OneToOne(() => MetaOption, {
     cascade: true,
+    eager: true,
   })
   @JoinColumn()
   metaOptions?: MetaOption;

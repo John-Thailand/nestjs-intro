@@ -23,20 +23,15 @@ export class PostsService {
     // return the post
     return await this.postsRepository.save(post);
   }
-  public findAll(userId: string) {
+  public async findAll(userId: string) {
     const user = this.usersService.findOneById(userId);
 
-    return [
-      {
-        user: user,
-        title: 'Test Title',
-        content: 'Test Content',
+    const posts = await this.postsRepository.find({
+      relations: {
+        metaOptions: true,
       },
-      {
-        user: user,
-        title: 'Test Title 2',
-        content: 'Test Content 2',
-      },
-    ];
+    });
+
+    return posts;
   }
 }

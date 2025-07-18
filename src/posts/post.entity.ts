@@ -72,7 +72,10 @@ export class Post {
 
   tags?: string[];
 
-  @OneToOne(() => MetaOption)
+  // Postエンティティにremoveなどの操作を行うと、MetaOptionエンティティにも自動的に同じ操作が行われる
+  @OneToOne(() => MetaOption, {
+    cascade: true,
+  })
   @JoinColumn()
   metaOptions?: MetaOption;
 }

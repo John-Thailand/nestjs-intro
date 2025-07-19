@@ -34,4 +34,13 @@ export class PostsService {
 
     return posts;
   }
+
+  public async delete(id: number) {
+    await this.postsRepository.delete(id);
+
+    return {
+      deleted: true,
+      id,
+    };
+  }
 }

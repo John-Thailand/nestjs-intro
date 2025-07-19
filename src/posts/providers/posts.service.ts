@@ -17,13 +17,19 @@ export class PostsService {
   ) {}
 
   public async create(createPostDto: CreatePostDto) {
+    // Find author from database based on authorId
+    const author = await this.usersService.findOneById(createPostDto.authorId);
+
     // Create post
-    const post = this.postsRepository.create(createPostDto);
+    const post = this.postsRepository.create({
+      ...createPostDto,
+      author: author,
+    });
 
     // return the post
     return await this.postsRepository.save(post);
   }
-  public async findAll(userId: string) {
+  public async findAll(userId: number) {
     const user = this.usersService.findOneById(userId);
 
     const posts = await this.postsRepository.find({

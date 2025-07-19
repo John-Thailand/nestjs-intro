@@ -30,11 +30,12 @@ export class PostsService {
     return await this.postsRepository.save(post);
   }
   public async findAll(userId: number) {
-    const user = this.usersService.findOneById(userId);
+    // const user = this.usersService.findOneById(userId);
 
     const posts = await this.postsRepository.find({
       relations: {
         metaOptions: true,
+        author: true,
       },
     });
 

@@ -1,6 +1,8 @@
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -9,6 +11,7 @@ import { postType } from './enums/postType.enum';
 import { postStatus } from './enums/postStatus.enum';
 import { MetaOption } from 'src/meta-options/meta-option.entity';
 import { User } from 'src/users/user.entity';
+import { Tag } from 'src/tags/tag.entity';
 
 @Entity()
 export class Post {
@@ -71,8 +74,6 @@ export class Post {
   })
   publishOn?: Date;
 
-  tags?: string[];
-
   // Postエンティティにremoveなどの操作を行うと、MetaOptionエンティティにも自動的に同じ操作が行われる
   @OneToOne(() => MetaOption, (metaOptions) => metaOptions.post, {
     cascade: true,
@@ -82,4 +83,8 @@ export class Post {
 
   @ManyToOne(() => User, (user) => user.posts)
   author: User;
+
+  @ManyToMany(() => Tag)
+  @JoinTable()
+  tags?: Tag[];
 }

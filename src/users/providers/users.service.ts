@@ -1,6 +1,8 @@
 import {
   BadRequestException,
   forwardRef,
+  HttpException,
+  HttpStatus,
   Inject,
   Injectable,
   RequestTimeoutException,
@@ -68,18 +70,19 @@ export class UsersService {
     limit: number,
     page: number,
   ) {
-    console.log(this.profileConfigService);
-
-    return [
+    throw new HttpException(
       {
-        fistName: 'John',
-        email: 'john@doe.com',
+        status: HttpStatus.MOVED_PERMANENTLY,
+        error: 'The API endpoint does not exist',
+        fileName: 'users.service.ts',
+        lineNumber: 88,
       },
+      HttpStatus.MOVED_PERMANENTLY,
       {
-        fistName: 'naoki',
-        email: 'naoki@honda.com',
+        cause: new Error(),
+        description: 'Occured because the API endpoint was permanently moved',
       },
-    ];
+    );
   }
 
   public async findOneById(id: number) {

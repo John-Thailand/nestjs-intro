@@ -9,7 +9,12 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
+      // @Type(() => Number) でDTOの文字列を数値に変換できるようになる
       transform: true,
+      transformOptions: {
+        // @Type(() => Number) を書かなくても、DTOの型定義に基づいて暗黙的に変換してくれる
+        enableImplicitConversion: true,
+      },
     }),
   );
 

@@ -17,6 +17,7 @@ import { ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreateManyUsersDto } from '../dtos/create-many-users.dto';
+import { CreateUserProvider } from './create-user.provider';
 
 @Injectable()
 export class UsersService {
@@ -28,44 +29,11 @@ export class UsersService {
     @Inject(profileConfig.KEY)
     private readonly profileConfigService: ConfigType<typeof profileConfig>,
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
+    private readonly createUserProvider: CreateUserProvider,
   ) {}
 
   public async createuser(createUserDto: CreateUserDto) {
-    let existingUser = undefined;
-
-    try {
-      existingUser = await this.usersRepository.findOne({
-        where: { email: createUserDto.email },
-      });
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later',
-        {
-          description: 'Error connecting to the database',
-        },
-      );
-    }
-
-    // Handle exception
-    if (existingUser) {
-      throw new BadRequestException(
-        'The user already exists, please check your email.',
-      );
-    }
-
-    const newUser = this.usersRepository.create(createUserDto);
-    try {
-      await this.usersRepository.save(newUser);
-    } catch (error) {
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later',
-        {
-          description: 'Error connecting to the database',
-        },
-      );
-    }
-
-    return newUser;
+    return this.createUserProvider.createuser(createUserDto);
   }
 
   public findAll(

@@ -8,10 +8,14 @@ import { AuthType } from 'src/auth/enums/auth-type.enum';
 export class AuthenticationGuard implements CanActivate {
   private static readonly defaultAuthType = AuthType.Bearer;
 
+  // 複数のガードも許容するため CanActivate[]となる
+  // @UseGuards(FirstGuard, SecondGuard)
   private readonly authTypeGuardMap: Record<
     AuthType,
     CanActivate | CanActivate[]
   > = {
+    // []を使うことで AuthType.Bearer(='bearer')という変数値をキーとして使える
+    // { bearer: 'value' }
     [AuthType.Bearer]: this.accessTokenGuard,
     [AuthType.None]: { canActivate: () => true },
   };

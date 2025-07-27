@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   DefaultValuePipe,
   Get,
@@ -8,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersParamDto } from './dtos/get-users-param.dto';
@@ -57,6 +59,8 @@ export class UsersController {
   @Post()
   // @SetMetadata('authType', 'none')
   @Auth(AuthType.None)
+  // ClassSerializerInterceptorで@Exclude()を有効にして、passwordをレスポンスから除外する
+  @UseInterceptors(ClassSerializerInterceptor)
   public createUsers(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createuser(createUserDto);
   }

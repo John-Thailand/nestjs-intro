@@ -38,10 +38,7 @@ async function bootstrap() {
 
   // enable cors
   // ReactのURLからリクエストしていいよ（http://localhost:3500）
-  app.enableCors({
-    origin: 'http://localhost:3500',
-    credentials: true,
-  });
+  app.enableCors();
 
   await app.listen(3000);
 }

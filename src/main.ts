@@ -36,6 +36,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  // enable cors
+  // ReactのURLからリクエストしていいよ（http://localhost:3500）
+  app.enableCors({
+    origin: 'http://localhost:3500',
+    credentials: true,
+  });
+
   await app.listen(3000);
 }
 bootstrap();
